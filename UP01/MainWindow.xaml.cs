@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using UP01.Pages;
 
 namespace UP01
 {
@@ -23,6 +24,8 @@ namespace UP01
         public MainWindow()
         {
             InitializeComponent();
+            MainFrame.Navigate(new LoginPage());
         }
+
     }
 }

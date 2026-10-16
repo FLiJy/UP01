@@ -1,0 +1,272 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище AutoServiceDBModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="clients">
+          <Key>
+            <PropertyRef Name="client_id" />
+          </Key>
+          <Property Name="client_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="first_name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="last_name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="phone" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="email" Type="nvarchar" MaxLength="100" />
+          <Property Name="created_at" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="users">
+          <Key>
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="user_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="login" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="password_hash" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="first_name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="last_name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="role" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="created_at" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="vehicles">
+          <Key>
+            <PropertyRef Name="vehicle_id" />
+          </Key>
+          <Property Name="vehicle_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="client_id" Type="int" Nullable="false" />
+          <Property Name="vin" Type="nvarchar" MaxLength="17" Nullable="false" />
+          <Property Name="make" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="model" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="year" Type="int" Nullable="false" />
+          <Property Name="license_plate" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="work_orders">
+          <Key>
+            <PropertyRef Name="order_id" />
+          </Key>
+          <Property Name="order_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="vehicle_id" Type="int" Nullable="false" />
+          <Property Name="status" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="start_date" Type="datetime" Nullable="false" />
+          <Property Name="completion_date" Type="datetime" />
+          <Property Name="total_amount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_vehicles_clients">
+          <End Role="clients" Type="Self.clients" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="vehicles" Type="Self.vehicles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="clients">
+              <PropertyRef Name="client_id" />
+            </Principal>
+            <Dependent Role="vehicles">
+              <PropertyRef Name="client_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_work_orders_vehicles">
+          <End Role="vehicles" Type="Self.vehicles" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="work_orders" Type="Self.work_orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="vehicles">
+              <PropertyRef Name="vehicle_id" />
+            </Principal>
+            <Dependent Role="work_orders">
+              <PropertyRef Name="vehicle_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище AutoServiceDBModelContainer">
+          <EntitySet Name="clients" EntityType="Self.clients" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="vehicles" EntityType="Self.vehicles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="work_orders" EntityType="Self.work_orders" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_vehicles_clients" Association="Self.FK_vehicles_clients">
+            <End Role="clients" EntitySet="clients" />
+            <End Role="vehicles" EntitySet="vehicles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_work_orders_vehicles" Association="Self.FK_work_orders_vehicles">
+            <End Role="vehicles" EntitySet="vehicles" />
+            <End Role="work_orders" EntitySet="work_orders" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="AutoServiceDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="clients">
+          <Key>
+            <PropertyRef Name="client_id" />
+          </Key>
+          <Property Name="client_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="first_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="last_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="phone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="created_at" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="vehicles" Relationship="Self.FK_vehicles_clients" FromRole="clients" ToRole="vehicles" />
+        </EntityType>
+        <EntityType Name="users">
+          <Key>
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="user_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="password_hash" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="first_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="last_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="role" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="created_at" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="vehicles">
+          <Key>
+            <PropertyRef Name="vehicle_id" />
+          </Key>
+          <Property Name="vehicle_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="client_id" Type="Int32" Nullable="false" />
+          <Property Name="vin" Type="String" MaxLength="17" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="make" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="model" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="year" Type="Int32" Nullable="false" />
+          <Property Name="license_plate" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="clients" Relationship="Self.FK_vehicles_clients" FromRole="vehicles" ToRole="clients" />
+          <NavigationProperty Name="work_orders" Relationship="Self.FK_work_orders_vehicles" FromRole="vehicles" ToRole="work_orders" />
+        </EntityType>
+        <EntityType Name="work_orders">
+          <Key>
+            <PropertyRef Name="order_id" />
+          </Key>
+          <Property Name="order_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="vehicle_id" Type="Int32" Nullable="false" />
+          <Property Name="status" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="start_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="completion_date" Type="DateTime" Precision="3" />
+          <Property Name="total_amount" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <NavigationProperty Name="vehicles" Relationship="Self.FK_work_orders_vehicles" FromRole="work_orders" ToRole="vehicles" />
+        </EntityType>
+        <Association Name="FK_vehicles_clients">
+          <End Role="clients" Type="Self.clients" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="vehicles" Type="Self.vehicles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="clients">
+              <PropertyRef Name="client_id" />
+            </Principal>
+            <Dependent Role="vehicles">
+              <PropertyRef Name="client_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_work_orders_vehicles">
+          <End Role="vehicles" Type="Self.vehicles" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="work_orders" Type="Self.work_orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="vehicles">
+              <PropertyRef Name="vehicle_id" />
+            </Principal>
+            <Dependent Role="work_orders">
+              <PropertyRef Name="vehicle_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="AutoServiceDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="clients" EntityType="Self.clients" />
+          <EntitySet Name="users" EntityType="Self.users" />
+          <EntitySet Name="vehicles" EntityType="Self.vehicles" />
+          <EntitySet Name="work_orders" EntityType="Self.work_orders" />
+          <AssociationSet Name="FK_vehicles_clients" Association="Self.FK_vehicles_clients">
+            <End Role="clients" EntitySet="clients" />
+            <End Role="vehicles" EntitySet="vehicles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_work_orders_vehicles" Association="Self.FK_work_orders_vehicles">
+            <End Role="vehicles" EntitySet="vehicles" />
+            <End Role="work_orders" EntitySet="work_orders" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище AutoServiceDBModelContainer" CdmEntityContainer="AutoServiceDBEntities">
+          <EntitySetMapping Name="clients">
+            <EntityTypeMapping TypeName="AutoServiceDBModel.clients">
+              <MappingFragment StoreEntitySet="clients">
+                <ScalarProperty Name="client_id" ColumnName="client_id" />
+                <ScalarProperty Name="first_name" ColumnName="first_name" />
+                <ScalarProperty Name="last_name" ColumnName="last_name" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="users">
+            <EntityTypeMapping TypeName="AutoServiceDBModel.users">
+              <MappingFragment StoreEntitySet="users">
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="login" ColumnName="login" />
+                <ScalarProperty Name="password_hash" ColumnName="password_hash" />
+                <ScalarProperty Name="first_name" ColumnName="first_name" />
+                <ScalarProperty Name="last_name" ColumnName="last_name" />
+                <ScalarProperty Name="role" ColumnName="role" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vehicles">
+            <EntityTypeMapping TypeName="AutoServiceDBModel.vehicles">
+              <MappingFragment StoreEntitySet="vehicles">
+                <ScalarProperty Name="vehicle_id" ColumnName="vehicle_id" />
+                <ScalarProperty Name="client_id" ColumnName="client_id" />
+                <ScalarProperty Name="vin" ColumnName="vin" />
+                <ScalarProperty Name="make" ColumnName="make" />
+                <ScalarProperty Name="model" ColumnName="model" />
+                <ScalarProperty Name="year" ColumnName="year" />
+                <ScalarProperty Name="license_plate" ColumnName="license_plate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="work_orders">
+            <EntityTypeMapping TypeName="AutoServiceDBModel.work_orders">
+              <MappingFragment StoreEntitySet="work_orders">
+                <ScalarProperty Name="order_id" ColumnName="order_id" />
+                <ScalarProperty Name="vehicle_id" ColumnName="vehicle_id" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="start_date" ColumnName="start_date" />
+                <ScalarProperty Name="completion_date" ColumnName="completion_date" />
+                <ScalarProperty Name="total_amount" ColumnName="total_amount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
