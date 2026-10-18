@@ -100,19 +100,16 @@ namespace UP01.Pages
                 MessageBoxButton.OK,
                 MessageBoxImage.Information);
 
-            // Переход в зависимости от роли
             if (AuthService.CurrentUser.role ==
-                "Администратор")
+     "Администратор")
             {
-                // Пока AdminPage не создана
-                MessageBox.Show(
-                    "Вы вошли как администратор.");
+                NavigationService.Navigate(
+                    new AdminPage());
             }
             else
             {
-                // Пока UserPage не создана
-                MessageBox.Show(
-                    "Вы вошли как пользователь.");
+                NavigationService.Navigate(
+                    new UserPage());
             }
         }
 
