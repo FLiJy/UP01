@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace UP01
+namespace UP01.Core
 {
     public class Core
     {

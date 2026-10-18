@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using UP01;
+using UP01.Core;
 namespace UP01.Pages
 {
     /// <summary>
@@ -27,48 +28,69 @@ namespace UP01.Pages
             InitializeComponent();
         }
 
-        private void LoginButton_Click(object sender, RoutedEventArgs e)
+        private void LoginButton_Click(
+            object sender,
+            RoutedEventArgs e)
         {
-            string login = LoginTextBox.Text.Trim();
-            string password = PasswordBox.Password;
+            string login =
+                LoginTextBox.Text.Trim();
 
-            if (string.IsNullOrWhiteSpace(login))
+            string password =
+                PasswordBox.Password;
+
+            ErrorTextBlock.Text = "";
+
+            // Проверка капчи после 3 ошибок
+            if (failedAttempts >= 3)
             {
-                ErrorTextBlock.Text = "Введите логин.";
-                return;
+                if (!CaptchaService.Check(
+                    CaptchaTextBox.Text))
+                {
+                    ErrorTextBlock.Text =
+                        "Введите правильную капчу.";
+
+                    CaptchaTextBlock.Text =
+                        CaptchaService.Generate();
+
+                    CaptchaTextBox.Clear();
+
+                    return;
+                }
             }
 
-            if (string.IsNullOrWhiteSpace(password))
-            {
-                ErrorTextBlock.Text = "Введите пароль.";
-                return;
-            }
+            // Авторизация
+            string result =
+                AuthService.Login(login, password);
 
-            var user = Core.Context.users
-                .FirstOrDefault(x => x.login == login);
-
-            if (user == null)
+            // Ошибка авторизации
+            if (!string.IsNullOrEmpty(result))
             {
                 failedAttempts++;
-                ErrorTextBlock.Text = "Неверный логин или пароль.";
+
+                ErrorTextBlock.Text = result;
+
+                // Показываем капчу после 3 ошибок
+                if (failedAttempts >= 3)
+                {
+                    CaptchaPanel.Visibility =
+                        Visibility.Visible;
+
+                    CaptchaTextBlock.Text =
+                        CaptchaService.Generate();
+
+                    CaptchaTextBox.Clear();
+                }
+
                 return;
             }
 
-            // Временно проверяем тестовые значения.
-            // Позже заменим на PasswordService и хэширование.
-
-            bool passwordCorrect =
-                (login == "admin" && password == "admin123") ||
-                (login == "user" && password == "user123");
-
-            if (!passwordCorrect)
-            {
-                failedAttempts++;
-                ErrorTextBlock.Text = "Неверный логин или пароль.";
-                return;
-            }
-
+            // Успешный вход
             failedAttempts = 0;
+
+            CaptchaPanel.Visibility =
+                Visibility.Collapsed;
+
+            CaptchaTextBox.Clear();
 
             ErrorTextBlock.Text = "";
 
@@ -78,25 +100,28 @@ namespace UP01.Pages
                 MessageBoxButton.OK,
                 MessageBoxImage.Information);
 
-            if (user.role == "Администратор")
+            // Переход в зависимости от роли
+            if (AuthService.CurrentUser.role ==
+                "Администратор")
             {
-                // Позже откроем AdminPage
+                // Пока AdminPage не создана
+                MessageBox.Show(
+                    "Вы вошли как администратор.");
             }
             else
             {
-                // Позже откроем UserPage
+                // Пока UserPage не создана
+                MessageBox.Show(
+                    "Вы вошли как пользователь.");
             }
         }
 
-        private void RegisterButton_Click(object sender, RoutedEventArgs e)
+        private void RegisterButton_Click(
+            object sender,
+            RoutedEventArgs e)
         {
-            // Позже добавим переход на RegisterPage
-            MessageBox.Show(
-                "Страница регистрации будет добавлена следующим модулем.",
-                "Регистрация",
-                MessageBoxButton.OK,
-                MessageBoxImage.Information);
+            NavigationService.Navigate(
+                new RegisterPage());
         }
     }
 }
-
