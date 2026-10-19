@@ -7,8 +7,482 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="AdminPage">
+    <Grid Background="{DynamicResource PageBackgroundBrush}">
 
-    <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="70"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+
+        <!-- Верхняя панель -->
+
+        <Border
+            Grid.Row="0"
+            Background="{DynamicResource SecondaryBrush}"
+            Padding="20,10">
+
+            <Grid>
+
+                <TextBlock
+                    Text="Автосервис - Администратор"
+                    Foreground="{DynamicResource WhiteBrush}"
+                    FontFamily="Open Sans"
+                    FontSize="22"
+                    FontWeight="SemiBold"
+                    VerticalAlignment="Center"/>
+
+                <StackPanel
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right">
+
+                    <TextBlock
+                        x:Name="AdminNameTextBlock"
+                        Foreground="{DynamicResource WhiteBrush}"
+                        FontFamily="Open Sans"
+                        FontSize="14"
+                        VerticalAlignment="Center"
+                        Margin="0,0,15,0"/>
+
+                    <Button
+                        Content="Сменить пароль"
+                        Width="150"
+                        Click="ChangePasswordButton_Click"/>
+
+                    <Button
+                        Content="Выйти"
+                        Width="100"
+                        Margin="10,0,0,0"
+                        Background="{DynamicResource ErrorBrush}"
+                        Click="LogoutButton_Click"/>
+
+                </StackPanel>
+
+            </Grid>
+
+        </Border>
+
+
+        <!-- Основная область -->
+
+        <Grid
+            Grid.Row="1"
+            Margin="25">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+
+            <!-- Заголовок -->
+
+            <TextBlock
+                Grid.Row="0"
+                Text="Панель администратора"
+                Style="{StaticResource PageTitleStyle}"
+                Margin="0,0,0,15"/>
+
+
+            <!-- Поиск -->
+
+            <Border
+                Grid.Row="1"
+                Style="{StaticResource CardStyle}"
+                Padding="10"
+                Margin="0,0,0,15">
+
+                <Grid>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="180"/>
+                        <ColumnDefinition Width="130"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBox
+                        x:Name="SearchTextBox"
+                        Grid.Column="0"
+                        ToolTip="Введите данные для поиска"
+                        TextChanged="SearchTextBox_TextChanged"/>
+
+                    <ComboBox
+                        x:Name="SortComboBox"
+                        Grid.Column="1"
+                        Margin="10,0"
+                        SelectionChanged="SortComboBox_SelectionChanged">
+
+                        <ComboBoxItem
+                            Content="По умолчанию"/>
+
+                        <ComboBoxItem
+                            Content="По имени"/>
+
+                        <ComboBoxItem
+                            Content="По фамилии"/>
+
+                    </ComboBox>
+
+                    <Button
+                        Grid.Column="2"
+                        Content="Сбросить"
+                        Click="ResetButton_Click"/>
+
+                </Grid>
+
+            </Border>
+
+
+            <!-- Вкладки -->
+
+            <TabControl
+                Grid.Row="2"
+                x:Name="AdminTabControl"
+                SelectionChanged="AdminTabControl_SelectionChanged">
+
+
+                <!-- КЛИЕНТЫ -->
+
+                <TabItem Header="Клиенты">
+
+                    <Grid>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <StackPanel
+                            Grid.Row="0"
+                            Orientation="Horizontal"
+                            Margin="0,0,0,10">
+
+                            <Button
+                                Content="Добавить"
+                                Width="120"
+                                Click="AddClientButton_Click"/>
+
+                            <Button
+                                Content="Изменить"
+                                Width="120"
+                                Margin="10,0,0,0"
+                                Click="EditClientButton_Click"/>
+
+                            <Button
+                                Content="Удалить"
+                                Width="120"
+                                Margin="10,0,0,0"
+                                Background="{DynamicResource ErrorBrush}"
+                                Click="DeleteClientButton_Click"/>
+
+                        </StackPanel>
+
+
+                        <DataGrid
+                            Grid.Row="1"
+                            x:Name="ClientsDataGrid"
+                            AutoGenerateColumns="False"
+                            IsReadOnly="True"
+                            CanUserSortColumns="True">
+
+                            <DataGrid.Columns>
+
+                                <DataGridTextColumn
+                                    Header="ID"
+                                    Binding="{Binding client_id}"
+                                    Width="60"/>
+
+                                <DataGridTextColumn
+                                    Header="Имя"
+                                    Binding="{Binding first_name}"
+                                    Width="*"/>
+
+                                <DataGridTextColumn
+                                    Header="Фамилия"
+                                    Binding="{Binding last_name}"
+                                    Width="*"/>
+
+                                <DataGridTextColumn
+                                    Header="Телефон"
+                                    Binding="{Binding phone}"
+                                    Width="150"/>
+
+                                <DataGridTextColumn
+                                    Header="Email"
+                                    Binding="{Binding email}"
+                                    Width="200"/>
+
+                                <DataGridTextColumn
+                                    Header="Дата создания"
+                                    Binding="{Binding created_at}"
+                                    Width="150"/>
+
+                            </DataGrid.Columns>
+
+                        </DataGrid>
+
+                    </Grid>
+
+                </TabItem>
+
+
+                <!-- АВТОМОБИЛИ -->
+
+                <TabItem Header="Автомобили">
+
+                    <Grid>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <StackPanel
+                            Grid.Row="0"
+                            Orientation="Horizontal"
+                            Margin="0,0,0,10">
+
+                            <Button
+                                Content="Добавить"
+                                Width="120"
+                                Click="AddVehicleButton_Click"/>
+
+                            <Button
+                                Content="Изменить"
+                                Width="120"
+                                Margin="10,0,0,0"
+                                Click="EditVehicleButton_Click"/>
+
+                            <Button
+                                Content="Удалить"
+                                Width="120"
+                                Margin="10,0,0,0"
+                                Background="{DynamicResource ErrorBrush}"
+                                Click="DeleteVehicleButton_Click"/>
+
+                        </StackPanel>
+
+
+                        <DataGrid
+                            Grid.Row="1"
+                            x:Name="VehiclesDataGrid"
+                            AutoGenerateColumns="False"
+                            IsReadOnly="True"
+                            CanUserSortColumns="True">
+
+                            <DataGrid.Columns>
+
+                                <DataGridTextColumn
+                                    Header="ID"
+                                    Binding="{Binding vehicle_id}"
+                                    Width="60"/>
+
+                                <DataGridTextColumn
+                                    Header="Клиент"
+                                    Binding="{Binding client_id}"
+                                    Width="80"/>
+
+                                <DataGridTextColumn
+                                    Header="VIN"
+                                    Binding="{Binding vin}"
+                                    Width="180"/>
+
+                                <DataGridTextColumn
+                                    Header="Марка"
+                                    Binding="{Binding make}"
+                                    Width="*"/>
+
+                                <DataGridTextColumn
+                                    Header="Модель"
+                                    Binding="{Binding model}"
+                                    Width="*"/>
+
+                                <DataGridTextColumn
+                                    Header="Год"
+                                    Binding="{Binding year}"
+                                    Width="80"/>
+
+                                <DataGridTextColumn
+                                    Header="Гос. номер"
+                                    Binding="{Binding license_plate}"
+                                    Width="120"/>
+
+                            </DataGrid.Columns>
+
+                        </DataGrid>
+
+                    </Grid>
+
+                </TabItem>
+
+
+                <!-- ЗАКАЗЫ -->
+
+                <TabItem Header="Заказы">
+
+                    <Grid>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <StackPanel
+                            Grid.Row="0"
+                            Orientation="Horizontal"
+                            Margin="0,0,0,10">
+
+                            <Button
+                                Content="Добавить"
+                                Width="120"
+                                Click="AddOrderButton_Click"/>
+
+                            <Button
+                                Content="Изменить"
+                                Width="120"
+                                Margin="10,0,0,0"
+                                Click="EditOrderButton_Click"/>
+
+                            <Button
+                                Content="Удалить"
+                                Width="120"
+                                Margin="10,0,0,0"
+                                Background="{DynamicResource ErrorBrush}"
+                                Click="DeleteOrderButton_Click"/>
+
+                        </StackPanel>
+
+
+                        <DataGrid
+                            Grid.Row="1"
+                            x:Name="OrdersDataGrid"
+                            AutoGenerateColumns="False"
+                            IsReadOnly="True"
+                            CanUserSortColumns="True">
+
+                            <DataGrid.Columns>
+
+                                <DataGridTextColumn
+                                    Header="ID"
+                                    Binding="{Binding order_id}"
+                                    Width="60"/>
+
+                                <DataGridTextColumn
+                                    Header="Автомобиль"
+                                    Binding="{Binding vehicle_id}"
+                                    Width="100"/>
+
+                                <DataGridTextColumn
+                                    Header="Сотрудник"
+                                    Binding="{Binding employee_id}"
+                                    Width="100"/>
+
+                                <DataGridTextColumn
+                                    Header="Статус"
+                                    Binding="{Binding status}"
+                                    Width="150"/>
+
+                                <DataGridTextColumn
+                                    Header="Начало"
+                                    Binding="{Binding start_date}"
+                                    Width="150"/>
+
+                                <DataGridTextColumn
+                                    Header="Завершение"
+                                    Binding="{Binding completion_date}"
+                                    Width="150"/>
+
+                                <DataGridTextColumn
+                                    Header="Сумма"
+                                    Binding="{Binding total_amount}"
+                                    Width="120"/>
+
+                            </DataGrid.Columns>
+
+                        </DataGrid>
+
+                    </Grid>
+
+                </TabItem>
+
+
+                <!-- ГРАФИК -->
+
+                <TabItem Header="Статистика">
+
+                    <Grid>
+
+                        <StackPanel
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center">
+
+                            <TextBlock
+                                Text="Статистика автосервиса"
+                                FontSize="24"
+                                FontWeight="SemiBold"
+                                HorizontalAlignment="Center"/>
+
+                            <TextBlock
+                                x:Name="StatisticsTextBlock"
+                                FontSize="18"
+                                Margin="0,20,0,0"
+                                TextAlignment="Center"/>
+
+                            <Button
+                                Content="Обновить статистику"
+                                Width="200"
+                                Margin="0,20,0,0"
+                                Click="RefreshStatisticsButton_Click"/>
+
+                        </StackPanel>
+
+                    </Grid>
+
+                </TabItem>
+
+
+                <!-- ОТЧЁТЫ -->
+
+                <TabItem Header="Отчёты">
+
+                    <StackPanel
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center">
+
+                        <TextBlock
+                            Text="Экспорт отчётов"
+                            FontSize="24"
+                            FontWeight="SemiBold"
+                            HorizontalAlignment="Center"
+                            Margin="0,0,0,20"/>
+
+                        <Button
+                            Content="Экспорт в DOCX"
+                            Width="220"
+                            Click="ExportDocxButton_Click"/>
+
+                        <Button
+                            Content="Экспорт в PDF"
+                            Width="220"
+                            Margin="0,10,0,0"
+                            Click="ExportPdfButton_Click"/>
+
+                        <Button
+                            Content="Экспорт в XLSX"
+                            Width="220"
+                            Margin="0,10,0,0"
+                            Click="ExportXlsxButton_Click"/>
+
+                    </StackPanel>
+
+                </TabItem>
+
+            </TabControl>
+
+        </Grid>
+
     </Grid>
+
 </Page>
+

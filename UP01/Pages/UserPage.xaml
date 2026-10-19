@@ -53,7 +53,8 @@
                         Content="Выйти"
                         Width="100"
                         Click="LogoutButton_Click"
-                        Background="{DynamicResource ErrorBrush}"/>
+                        Background="{DynamicResource ErrorBrush}"
+                        Margin="10,0,0,0"/>
 
                 </StackPanel>
 
@@ -62,7 +63,7 @@
         </Border>
 
 
-        <!-- Основное содержимое -->
+        <!-- Основная часть -->
 
         <Grid
             Grid.Row="1"
@@ -79,47 +80,52 @@
 
             <TextBlock
                 Grid.Row="0"
-                Text="Клиенты"
-                Style="{StaticResource PageTitleStyle}"/>
+                Text="Информация автосервиса"
+                Style="{StaticResource PageTitleStyle}"
+                Margin="0,0,0,15"/>
 
 
-            <!-- Поиск и фильтр -->
+            <!-- Панель поиска -->
 
             <Border
                 Grid.Row="1"
                 Style="{StaticResource CardStyle}"
-                Margin="0,0,0,15">
+                Margin="0,0,0,15"
+                Padding="10">
 
                 <Grid>
 
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="180"/>
-                        <ColumnDefinition Width="150"/>
+                        <ColumnDefinition Width="130"/>
                     </Grid.ColumnDefinitions>
+
 
                     <TextBox
                         x:Name="SearchTextBox"
                         Grid.Column="0"
-                        ToolTip="Поиск по имени, фамилии или телефону"
+                        ToolTip="Введите текст для поиска"
                         TextChanged="SearchTextBox_TextChanged"/>
+
 
                     <ComboBox
                         x:Name="SortComboBox"
                         Grid.Column="1"
-                        Margin="10,5,10,5"
+                        Margin="10,0"
                         SelectionChanged="SortComboBox_SelectionChanged">
 
                         <ComboBoxItem
-                            Content="По фамилии"/>
+                            Content="По умолчанию"/>
 
                         <ComboBoxItem
                             Content="По имени"/>
 
                         <ComboBoxItem
-                            Content="По телефону"/>
+                            Content="По фамилии"/>
 
                     </ComboBox>
+
 
                     <Button
                         Grid.Column="2"
@@ -131,50 +137,172 @@
             </Border>
 
 
-            <!-- Таблица -->
+            <!-- Таблицы -->
 
-            <DataGrid
-                x:Name="ClientsDataGrid"
+            <TabControl
                 Grid.Row="2"
-                AutoGenerateColumns="False"
-                IsReadOnly="True"
-                SelectionChanged="ClientsDataGrid_SelectionChanged">
+                x:Name="DataTabControl"
+                SelectionChanged="DataTabControl_SelectionChanged">
 
-                <DataGrid.Columns>
 
-                    <DataGridTextColumn
-                        Header="ID"
-                        Binding="{Binding client_id}"
-                        Width="60"/>
 
-                    <DataGridTextColumn
-                        Header="Имя"
-                        Binding="{Binding first_name}"
-                        Width="*"/>
 
-                    <DataGridTextColumn
-                        Header="Фамилия"
-                        Binding="{Binding last_name}"
-                        Width="*"/>
 
-                    <DataGridTextColumn
-                        Header="Телефон"
-                        Binding="{Binding phone}"
-                        Width="150"/>
+                <TabItem Header="Клиенты">
 
-                    <DataGridTextColumn
-                        Header="Email"
-                        Binding="{Binding email}"
-                        Width="200"/>
+                    <DataGrid
+                        x:Name="ClientsDataGrid"
+                        AutoGenerateColumns="False"
+                        IsReadOnly="True"
+                        CanUserSortColumns="True">
 
-                    <DataGridTextColumn
-                        Header="Дата регистрации"
-                        Binding="{Binding created_at}"
-                        Width="150"/>
+                        <DataGrid.Columns>
 
-                </DataGrid.Columns>
+                            <DataGridTextColumn
+                                Header="ID"
+                                Binding="{Binding client_id}"
+                                Width="60"/>
 
-            </DataGrid>
+                            <DataGridTextColumn
+                                Header="Имя"
+                                Binding="{Binding first_name}"
+                                Width="*"/>
+
+                            <DataGridTextColumn
+                                Header="Фамилия"
+                                Binding="{Binding last_name}"
+                                Width="*"/>
+
+                            <DataGridTextColumn
+                                Header="Телефон"
+                                Binding="{Binding phone}"
+                                Width="150"/>
+
+                            <DataGridTextColumn
+                                Header="Email"
+                                Binding="{Binding email}"
+                                Width="200"/>
+
+                            <DataGridTextColumn
+                                Header="Дата регистрации"
+                                Binding="{Binding created_at}"
+                                Width="150"/>
+
+                        </DataGrid.Columns>
+
+                    </DataGrid>
+
+                </TabItem>
+
+
+                <!-- АВТОМОБИЛИ -->
+
+                <TabItem Header="Автомобили">
+
+                    <DataGrid
+                        x:Name="VehiclesDataGrid"
+                        AutoGenerateColumns="False"
+                        IsReadOnly="True"
+                        CanUserSortColumns="True">
+
+                        <DataGrid.Columns>
+
+                            <DataGridTextColumn
+                                Header="ID"
+                                Binding="{Binding vehicle_id}"
+                                Width="60"/>
+
+                            <DataGridTextColumn
+                                Header="ID клиента"
+                                Binding="{Binding client_id}"
+                                Width="100"/>
+
+                            <DataGridTextColumn
+                                Header="VIN"
+                                Binding="{Binding vin}"
+                                Width="180"/>
+
+                            <DataGridTextColumn
+                                Header="Марка"
+                                Binding="{Binding make}"
+                                Width="*"/>
+
+                            <DataGridTextColumn
+                                Header="Модель"
+                                Binding="{Binding model}"
+                                Width="*"/>
+
+                            <DataGridTextColumn
+                                Header="Год"
+                                Binding="{Binding year}"
+                                Width="80"/>
+
+                            <DataGridTextColumn
+                                Header="Гос. номер"
+                                Binding="{Binding license_plate}"
+                                Width="120"/>
+
+                        </DataGrid.Columns>
+
+                    </DataGrid>
+
+                </TabItem>
+
+
+                <!-- ЗАКАЗЫ -->
+
+                <TabItem Header="Заказы">
+
+                    <DataGrid
+                        x:Name="OrdersDataGrid"
+                        AutoGenerateColumns="False"
+                        IsReadOnly="True"
+                        CanUserSortColumns="True">
+
+                        <DataGrid.Columns>
+
+                            <DataGridTextColumn
+                                Header="ID"
+                                Binding="{Binding order_id}"
+                                Width="60"/>
+
+                            <DataGridTextColumn
+                                Header="Автомобиль"
+                                Binding="{Binding vehicle_id}"
+                                Width="100"/>
+
+                            <DataGridTextColumn
+                                Header="Сотрудник"
+                                Binding="{Binding employee_id}"
+                                Width="100"/>
+
+                            <DataGridTextColumn
+                                Header="Статус"
+                                Binding="{Binding status}"
+                                Width="150"/>
+
+                            <DataGridTextColumn
+                                Header="Дата начала"
+                                Binding="{Binding start_date}"
+                                Width="150"/>
+
+                            <DataGridTextColumn
+                                Header="Дата завершения"
+                                Binding="{Binding completion_date}"
+                                Width="150"/>
+
+                            <DataGridTextColumn
+                                Header="Сумма"
+                                Binding="{Binding total_amount}"
+                                Width="120"/>
+
+                        </DataGrid.Columns>
+
+                    </DataGrid>
+
+                </TabItem>
+
+            </TabControl>
 
         </Grid>
 
