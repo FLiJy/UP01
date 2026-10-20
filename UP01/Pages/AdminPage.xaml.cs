@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using UP01.Core;
+using UP01.Windows;
 
 namespace UP01.Pages
 {
@@ -274,38 +275,118 @@ namespace UP01.Pages
         // =========================
 
         private void AddClientButton_Click(
-            object sender,
-            RoutedEventArgs e)
+         object sender,
+         RoutedEventArgs e)
         {
-            MessageBox.Show(
-                "Окно добавления клиента будет подключено следующим модулем.");
+            ClientEditWindow window =
+                new ClientEditWindow();
+
+            if (window.ShowDialog() == true)
+            {
+                LoadClients();
+            }
         }
 
 
         private void EditClientButton_Click(
-            object sender,
-            RoutedEventArgs e)
+         object sender,
+         RoutedEventArgs e)
         {
-            MessageBox.Show(
-                "Окно редактирования клиента будет подключено следующим модулем.");
+            if (ClientsDataGrid.SelectedItem == null)
+            {
+                MessageBox.Show(
+                    "Выберите клиента для редактирования.",
+                    "Внимание",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning);
+
+                return;
+            }
+
+            ClientEditWindow window =
+                new ClientEditWindow(
+                    ClientsDataGrid.SelectedItem);
+
+            if (window.ShowDialog() == true)
+            {
+                LoadClients();
+            }
         }
 
 
         private void DeleteClientButton_Click(
-            object sender,
-            RoutedEventArgs e)
+     object sender,
+     RoutedEventArgs e)
         {
-            MessageBox.Show(
-                "Удаление клиента будет подключено следующим модулем.");
+            if (ClientsDataGrid.SelectedItem == null)
+            {
+                MessageBox.Show(
+                    "Выберите клиента для удаления.",
+                    "Внимание",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning);
+
+                return;
+            }
+
+            dynamic client =
+                ClientsDataGrid.SelectedItem;
+
+            MessageBoxResult result =
+                MessageBox.Show(
+                    "Вы действительно хотите удалить клиента "
+                    + client.first_name + " "
+                    + client.last_name
+                    + "?\n\n"
+                    + "Также будут удалены связанные автомобили и заказы.",
+                    "Подтверждение удаления",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Warning);
+
+            if (result != MessageBoxResult.Yes)
+                return;
+
+            try
+            {
+                Core.Core.Context.clients.Remove(client);
+
+                Core.Core.Context.SaveChanges();
+
+                LoadClients();
+                LoadVehicles();
+                LoadOrders();
+                LoadStatistics();
+
+                MessageBox.Show(
+                    "Клиент успешно удалён.",
+                    "Готово",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    "Не удалось удалить клиента.\n\n"
+                    + ex.Message,
+                    "Ошибка",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error);
+            }
         }
 
 
         private void AddVehicleButton_Click(
-            object sender,
-            RoutedEventArgs e)
-        {
-            MessageBox.Show(
-                "Окно добавления автомобиля будет подключено следующим модулем.");
+        object sender,
+        RoutedEventArgs e)
+            {
+                VehicleEditWindow window =
+                new VehicleEditWindow();
+
+            if (window.ShowDialog() == true)
+            {
+                LoadVehicles();
+                LoadStatistics();
+            }
         }
 
 
@@ -313,17 +394,95 @@ namespace UP01.Pages
             object sender,
             RoutedEventArgs e)
         {
-            MessageBox.Show(
-                "Окно редактирования автомобиля будет подключено следующим модулем.");
+            if (VehiclesDataGrid.SelectedItem == null)
+            {
+                MessageBox.Show(
+                    "Выберите автомобиль для редактирования.",
+                    "Внимание",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning);
+
+                return;
+            }
+
+            vehicles vehicle =
+                VehiclesDataGrid.SelectedItem
+                as vehicles;
+
+            if (vehicle == null)
+                return;
+
+            VehicleEditWindow window =
+                new VehicleEditWindow(vehicle);
+
+            if (window.ShowDialog() == true)
+            {
+                LoadVehicles();
+            }
         }
 
 
         private void DeleteVehicleButton_Click(
-            object sender,
-            RoutedEventArgs e)
-        {
-            MessageBox.Show(
-                "Удаление автомобиля будет подключено следующим модулем.");
+        object sender,
+        RoutedEventArgs e)
+            {
+            if (VehiclesDataGrid.SelectedItem == null)
+            {
+                MessageBox.Show(
+                    "Выберите автомобиль для удаления.",
+                    "Внимание",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning);
+
+                return;
+            }
+
+            vehicles vehicle =
+                VehiclesDataGrid.SelectedItem
+                as vehicles;
+
+            if (vehicle == null)
+                return;
+
+            MessageBoxResult result =
+                MessageBox.Show(
+                    "Вы действительно хотите удалить автомобиль "
+                    + vehicle.make + " "
+                    + vehicle.model
+                    + "?\n\n"
+                    + "Связанные заказы также будут удалены.",
+                    "Подтверждение удаления",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Warning);
+
+            if (result != MessageBoxResult.Yes)
+                return;
+
+            try
+            {
+                Core.Core.Context.vehicles.Remove(vehicle);
+
+                Core.Core.Context.SaveChanges();
+
+                LoadVehicles();
+                LoadOrders();
+                LoadStatistics();
+
+                MessageBox.Show(
+                    "Автомобиль успешно удалён.",
+                    "Готово",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    "Не удалось удалить автомобиль.\n\n"
+                    + ex.Message,
+                    "Ошибка",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error);
+            }
         }
 
 

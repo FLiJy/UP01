@@ -1,0 +1,147 @@
+﻿<Window x:Class="UP01.ClientEditWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:UP01"
+        mc:Ignorable="d"
+       Title="Клиент"
+        Width="500"
+        Height="700"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        Background="{DynamicResource PageBackgroundBrush}">
+
+    <Border
+        Margin="20"
+        Padding="25"
+        Background="{DynamicResource CardBackgroundBrush}"
+        CornerRadius="15">
+
+        <Grid>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+
+            <!-- Заголовок -->
+
+            <TextBlock
+                x:Name="TitleTextBlock"
+                Grid.Row="0"
+                Text="Добавление клиента"
+                Style="{StaticResource PageTitleStyle}"
+                HorizontalAlignment="Center"
+                Margin="0,0,0,20"/>
+
+
+            <!-- Имя -->
+
+            <StackPanel Grid.Row="1">
+
+                <TextBlock Text="Имя"/>
+
+                <TextBox
+                    x:Name="FirstNameTextBox"
+                    MaxLength="50"
+                    ToolTip="Введите имя клиента"
+                    PreviewTextInput="LettersOnly_PreviewTextInput"/>
+
+            </StackPanel>
+
+
+            <!-- Фамилия -->
+
+            <StackPanel
+                Grid.Row="2"
+                Margin="0,10,0,0">
+
+                <TextBlock Text="Фамилия"/>
+
+                <TextBox
+                    x:Name="LastNameTextBox"
+                    MaxLength="50"
+                    ToolTip="Введите фамилию клиента"
+                    PreviewTextInput="LettersOnly_PreviewTextInput"/>
+
+            </StackPanel>
+
+
+            <!-- Телефон -->
+
+            <StackPanel
+                Grid.Row="3"
+                Margin="0,10,0,0">
+
+                <TextBlock Text="Телефон"/>
+
+                <TextBox
+                    x:Name="PhoneTextBox"
+                    MaxLength="18"
+                    ToolTip="Например: +79991234567"
+                    PreviewTextInput="Phone_PreviewTextInput"/>
+
+            </StackPanel>
+
+
+            <!-- Email -->
+
+            <StackPanel
+                Grid.Row="4"
+                Margin="0,10,0,0">
+
+                <TextBlock Text="Email"/>
+
+                <TextBox
+                    x:Name="EmailTextBox"
+                    MaxLength="100"
+                    ToolTip="Например: client@mail.ru"/>
+
+            </StackPanel>
+
+
+            <!-- Ошибка -->
+
+            <TextBlock
+                x:Name="ErrorTextBlock"
+                Grid.Row="5"
+                Foreground="{DynamicResource ErrorTextBrush}"
+                TextWrapping="Wrap"
+                Margin="0,10,0,200"/>
+
+
+            <!-- Кнопки -->
+
+            <StackPanel
+                Grid.Row="6"
+                Orientation="Horizontal"
+                HorizontalAlignment="Center"
+                Margin="0,20,0,0">
+
+                <Button
+                    Content="Сохранить"
+                    Width="130"
+                    Click="SaveButton_Click"/>
+
+                <Button
+                    Content="Отмена"
+                    Width="130"
+                    Margin="10,0,0,0"
+                    Background="{DynamicResource SecondaryBrush}"
+                    Click="CancelButton_Click"/>
+
+            </StackPanel>
+
+        </Grid>
+
+    </Border>
+
+</Window>
+
