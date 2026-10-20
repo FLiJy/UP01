@@ -56,6 +56,16 @@
                         Background="{DynamicResource ErrorBrush}"
                         Margin="10,0,0,0"/>
 
+                    <Button
+                        Content="Сменить тему"
+                        Style="{StaticResource MenuButtonStyle}"
+                        Click="ThemeButton_Click"
+                        ToolTip="Переключить светлую и тёмную тему"
+                        Background="Green"
+                        Width="150"
+                        Margin="10,0,0,0"/>   
+                        
+
                 </StackPanel>
 
             </Grid>

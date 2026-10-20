@@ -233,5 +233,10 @@ namespace UP01.Pages
             NavigationService.Navigate(
                 new LoginPage());
         }
+
+        private void ThemeButton_Click(object sender, RoutedEventArgs e)
+        {
+            ThemeManager.ToggleTheme();
+        }
     }
 }

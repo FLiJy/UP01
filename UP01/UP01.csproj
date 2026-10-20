@@ -76,6 +76,7 @@
     <Compile Include="Core\AuthService.cs" />
     <Compile Include="Core\CaptchaService.cs" />
     <Compile Include="Core\PasswordService.cs" />
+    <Compile Include="Core\ThemeManager.cs" />
     <Compile Include="Model1.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

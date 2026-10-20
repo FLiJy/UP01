@@ -304,35 +304,38 @@
 
     <Style TargetType="DataGrid">
 
-        <Setter Property="FontFamily"
-                Value="Open Sans"/>
-
-        <Setter Property="FontSize"
-                Value="14"/>
+        <Setter Property="FontFamily" Value="Open Sans"/>
+        <Setter Property="FontSize" Value="14"/>
 
         <Setter Property="Background"
-                Value="{DynamicResource WhiteBrush}"/>
+     Value="{DynamicResource CardBackgroundBrush}"/>
 
         <Setter Property="Foreground"
-                Value="{DynamicResource TextBrush}"/>
+     Value="{DynamicResource TextBrush}"/>
 
         <Setter Property="BorderBrush"
-                Value="{DynamicResource BorderBrush}"/>
+     Value="{DynamicResource BorderBrush}"/>
 
-        <Setter Property="BorderThickness"
-                Value="1"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="RowBackground"
+     Value="{DynamicResource CardBackgroundBrush}"/>
 
-        <Setter Property="AutoGenerateColumns"
-                Value="True"/>
+        <Setter Property="AlternatingRowBackground"
+     Value="{DynamicResource PageBackgroundBrush}"/>
 
-        <Setter Property="CanUserAddRows"
-                Value="False"/>
+        <Setter Property="AlternationCount" Value="2"/>
+        <Setter Property="GridLinesVisibility" Value="Horizontal"/>
+        <Setter Property="HorizontalGridLinesBrush"
+     Value="{DynamicResource BorderBrush}"/>
 
-        <Setter Property="CanUserDeleteRows"
-                Value="False"/>
+        <Setter Property="HeadersVisibility" Value="Column"/>
+        <Setter Property="RowHeight" Value="35"/>
+        <Setter Property="ColumnHeaderHeight" Value="40"/>
 
-        <Setter Property="CanUserResizeRows"
-                Value="False"/>
+        <Setter Property="AutoGenerateColumns" Value="True"/>
+        <Setter Property="CanUserAddRows" Value="False"/>
+        <Setter Property="CanUserDeleteRows" Value="False"/>
+        <Setter Property="CanUserResizeRows" Value="False"/>
 
     </Style>
 
@@ -411,6 +414,65 @@
 
         <Setter Property="HorizontalAlignment"
                 Value="Center"/>
+
+    </Style>
+    
+    
+
+    <!-- ========================================= -->
+    <!-- DATA GRID: ЯЧЕЙКИ -->
+    <!-- ========================================= -->
+
+    <Style TargetType="DataGridCell">
+
+        <Setter Property="Foreground"
+            Value="{DynamicResource TextBrush}"/>
+
+        <Setter Property="Background" Value="Transparent"/>
+
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Padding" Value="5,2"/>
+
+        <Style.Triggers>
+
+            <Trigger Property="IsSelected" Value="True">
+
+                <Setter Property="Background"
+                    Value="{DynamicResource PrimaryBrush}"/>
+
+                <Setter Property="Foreground"
+                    Value="{DynamicResource WhiteBrush}"/>
+
+            </Trigger>
+
+        </Style.Triggers>
+
+    </Style>
+
+
+    <!-- ========================================= -->
+    <!-- DATA GRID: ЗАГОЛОВКИ СТОЛБЦОВ -->
+    <!-- ========================================= -->
+
+    <Style TargetType="DataGridColumnHeader">
+
+        <Setter Property="FontFamily" Value="Open Sans"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+
+        <Setter Property="Foreground"
+            Value="{DynamicResource WhiteBrush}"/>
+
+        <Setter Property="Background"
+            Value="{DynamicResource SecondaryBrush}"/>
+
+        <Setter Property="BorderBrush"
+            Value="{DynamicResource BorderBrush}"/>
+
+        <Setter Property="BorderThickness" Value="0,0,1,1"/>
+        <Setter Property="Padding" Value="8,4"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
 
     </Style>
 
