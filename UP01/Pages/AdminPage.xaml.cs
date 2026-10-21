@@ -490,8 +490,12 @@ namespace UP01.Pages
             object sender,
             RoutedEventArgs e)
         {
-            MessageBox.Show(
-                "Окно добавления заказа будет подключено следующим модулем.");
+            OrderEditWindow window = new OrderEditWindow();
+
+            if (window.ShowDialog() == true)
+            {
+                LoadOrders();
+            }
         }
 
 
@@ -499,8 +503,32 @@ namespace UP01.Pages
             object sender,
             RoutedEventArgs e)
         {
-            MessageBox.Show(
-                "Окно редактирования заказа будет подключено следующим модулем.");
+            if (OrdersDataGrid.SelectedItem == null)
+            {
+                MessageBox.Show(
+                    "Выберите заказ.",
+                    "Внимание",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning);
+
+                return;
+            }
+
+            work_orders order =
+                OrdersDataGrid.SelectedItem
+                as work_orders;
+
+            if (order == null)
+                return;
+
+
+            OrderEditWindow window =
+                new OrderEditWindow(order);
+
+            if (window.ShowDialog() == true)
+            {
+                LoadOrders();
+            }
         }
 
 
@@ -508,8 +536,61 @@ namespace UP01.Pages
             object sender,
             RoutedEventArgs e)
         {
-            MessageBox.Show(
-                "Удаление заказа будет подключено следующим модулем.");
+            if (OrdersDataGrid.SelectedItem == null)
+            {
+                MessageBox.Show(
+                    "Выберите заказ.",
+                    "Внимание",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning);
+
+                return;
+            }
+
+            work_orders order =
+                OrdersDataGrid.SelectedItem
+                as work_orders;
+
+            if (order == null)
+                return;
+
+
+            MessageBoxResult result =
+                MessageBox.Show(
+                    "Вы действительно хотите удалить заказ №"
+                    + order.order_id
+                    + "?",
+                    "Подтверждение",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Warning);
+
+            if (result != MessageBoxResult.Yes)
+                return;
+
+
+            try
+            {
+                Core.Core.Context.work_orders.Remove(order);
+
+                Core.Core.Context.SaveChanges();
+
+                LoadOrders();
+
+                MessageBox.Show(
+                    "Заказ удалён.",
+                    "Готово",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    "Не удалось удалить заказ:\n\n"
+                    + ex.Message,
+                    "Ошибка",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error);
+            }
         }
 
 
@@ -579,6 +660,13 @@ namespace UP01.Pages
         {
             MessageBox.Show(
                 "Экспорт XLSX будет подключён следующим модулем.");
+        }
+
+        private void StatisticsButton_Click(object sender, RoutedEventArgs e)
+        {
+            StatisticWindow window = new StatisticWindow();
+
+            window.ShowDialog();
         }
     }
 }
