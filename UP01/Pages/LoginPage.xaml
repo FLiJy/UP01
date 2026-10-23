@@ -20,7 +20,6 @@
 
             <StackPanel>
 
-                <!-- Логотип -->
                 <Image
                     Source="/res/Логотип.png"
                     Width="180"
@@ -29,8 +28,6 @@
                     HorizontalAlignment="Center"
                     Margin="0,0,0,10"/>
 
-
-                <!-- Заголовок -->
                 <TextBlock
                     Text="Авторизация"
                     Style="{StaticResource PageTitleStyle}"
@@ -43,8 +40,6 @@
                     TextAlignment="Center"
                     Margin="0,0,0,20"/>
 
-
-                <!-- Логин -->
                 <TextBlock
                     Text="Логин"/>
 
@@ -53,8 +48,6 @@
                     ToolTip="Введите логин"
                     MaxLength="50"/>
 
-
-                <!-- Пароль -->
                 <TextBlock
                     Text="Пароль"
                     Margin="0,10,0,0"/>
@@ -64,8 +57,6 @@
                     ToolTip="Введите пароль"
                     MaxLength="50"/>
 
-
-                <!-- Капча -->
                 <StackPanel
                     x:Name="CaptchaPanel"
                     Visibility="Collapsed"
@@ -96,8 +87,6 @@
 
                 </StackPanel>
 
-
-                <!-- Сообщение об ошибке -->
                 <TextBlock
                     x:Name="ErrorTextBlock"
                     Foreground="{DynamicResource ErrorTextBrush}"
@@ -106,15 +95,11 @@
                     TextWrapping="Wrap"
                     Margin="0,10,0,0"/>
 
-
-                <!-- Кнопка входа -->
                 <Button
                     Content="Войти"
                     Click="LoginButton_Click"
                     Margin="0,20,0,5"/>
 
-
-                <!-- Регистрация -->
                 <Button
                     Content="Регистрация"
                     Click="RegisterButton_Click"

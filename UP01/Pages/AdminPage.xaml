@@ -175,11 +175,16 @@
                                 Margin="10,0,0,0"
                                 Background="{DynamicResource ErrorBrush}"
                                 Click="DeleteClientButton_Click"/>
+                            
                             <Button Content="Статистика заказов"
                                 Click="StatisticsButton_Click"
                                 ToolTip="Открыть диаграмму заказов по статусам"
-                                    Margin="10,0,0, 0"/>       
+                                    Margin="10,0,0, 0"/>
 
+                            <Button Content="Экспорт в Excel"
+                                Click="ExportExcelButton_Click"
+                                ToolTip="Экспортировать отчёт по заказам в Excel"
+                                    Margin="10,0,0,0"/>     
                         </StackPanel>
 
 

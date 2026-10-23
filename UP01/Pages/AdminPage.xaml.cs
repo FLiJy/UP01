@@ -668,6 +668,11 @@ namespace UP01.Pages
 
             window.ShowDialog();
         }
+
+        private void ExportExcelButton_Click(object sender, RoutedEventArgs e)
+        {
+            ReportService.ExportExcel();
+        }
     }
 }
 
