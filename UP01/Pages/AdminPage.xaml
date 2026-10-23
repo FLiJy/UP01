@@ -56,6 +56,15 @@
                         Background="{DynamicResource ErrorBrush}"
                         Click="LogoutButton_Click"/>
 
+                    <Button
+                        Content="Сменить тему"
+                        Style="{StaticResource MenuButtonStyle}"
+                        Click="ThemeButton_Click"
+                        ToolTip="Переключить светлую и тёмную тему"
+                        Background="Green"
+                        Width="150"
+                        Margin="10,0,0,0"/>
+
                 </StackPanel>
 
             </Grid>
@@ -181,10 +190,7 @@
                                 ToolTip="Открыть диаграмму заказов по статусам"
                                     Margin="10,0,0, 0"/>
 
-                            <Button Content="Экспорт в Excel"
-                                Click="ExportExcelButton_Click"
-                                ToolTip="Экспортировать отчёт по заказам в Excel"
-                                    Margin="10,0,0,0"/>     
+                            
                         </StackPanel>
 
 
@@ -467,15 +473,15 @@
                             Margin="0,0,0,20"/>
 
                         <Button
-                            Content="Экспорт в DOCX"
-                            Width="220"
-                            Click="ExportDocxButton_Click"/>
+                             Content="Экспорт в DOCX"
+                             Width="220"
+                             Click="ExportDocxButton_Click"/>
 
                         <Button
-                            Content="Экспорт в PDF"
-                            Width="220"
-                            Margin="0,10,0,0"
-                            Click="ExportPdfButton_Click"/>
+                             Content="Экспорт в PDF"
+                             Width="220"
+                             Margin="0,10,0,0"
+                             Click="ExportPdfButton_Click"/>
 
                         <Button
                             Content="Экспорт в XLSX"

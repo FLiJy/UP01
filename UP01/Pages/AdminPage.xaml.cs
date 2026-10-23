@@ -14,6 +14,9 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using UP01.Core;
 using UP01.Windows;
+using Xceed.Words.NET;
+using Xceed.Document.NET;
+using Xceed;
 
 namespace UP01.Pages
 {
@@ -633,33 +636,31 @@ namespace UP01.Pages
 
 
         // =========================
-        // ОТЧЁТЫ - ПОКА ЗАГЛУШКИ
+        // ОТЧЁТ
         // =========================
-
         private void ExportDocxButton_Click(
             object sender,
             RoutedEventArgs e)
-        {
-            MessageBox.Show(
-                "Экспорт DOCX будет подключён следующим модулем.");
-        }
+                {
+            ReportService.ExportWord();
+             }
 
 
         private void ExportPdfButton_Click(
             object sender,
             RoutedEventArgs e)
         {
-            MessageBox.Show(
-                "Экспорт PDF будет подключён следующим модулем.");
+            ReportService.ExportPdf();
         }
+
 
 
         private void ExportXlsxButton_Click(
             object sender,
             RoutedEventArgs e)
         {
-            MessageBox.Show(
-                "Экспорт XLSX будет подключён следующим модулем.");
+            ReportService.ExportExcel();
+
         }
 
         private void StatisticsButton_Click(object sender, RoutedEventArgs e)
@@ -669,9 +670,11 @@ namespace UP01.Pages
             window.ShowDialog();
         }
 
-        private void ExportExcelButton_Click(object sender, RoutedEventArgs e)
+
+
+        private void ThemeButton_Click(object sender, RoutedEventArgs e)
         {
-            ReportService.ExportExcel();
+            ThemeManager.ToggleTheme();
         }
     }
 }
