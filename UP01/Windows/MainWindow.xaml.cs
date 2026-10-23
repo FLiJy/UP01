@@ -14,7 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using UP01.Pages;
 
-namespace UP01
+namespace UP01.Windows
 {
     /// <summary>
     /// Логика взаимодействия для MainWindow.xaml
