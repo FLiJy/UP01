@@ -13,7 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace UP01.Windows
+namespace UP01
 {
     /// <summary>
     /// Логика взаимодействия для ClientEditWindow.xaml
