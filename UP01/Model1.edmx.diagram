@@ -11,6 +11,7 @@
         <EntityTypeShape EntityType="AutoServiceDBModel.work_orders" Width="1.5" PointX="5.25" PointY="1.125" IsExpanded="true" />
         <AssociationConnector Association="AutoServiceDBModel.FK_vehicles_clients" ManuallyRouted="false" />
         <AssociationConnector Association="AutoServiceDBModel.FK_work_orders_vehicles" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="AutoServiceDBModel.sysdiagrams" Width="1.5" PointX="3.375" PointY="4.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

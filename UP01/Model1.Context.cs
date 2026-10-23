@@ -29,5 +29,6 @@ namespace UP01
         public virtual DbSet<users> users { get; set; }
         public virtual DbSet<vehicles> vehicles { get; set; }
         public virtual DbSet<work_orders> work_orders { get; set; }
+        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
     }
 }

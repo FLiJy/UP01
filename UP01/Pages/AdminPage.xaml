@@ -389,11 +389,6 @@
                                     Width="100"/>
 
                                 <DataGridTextColumn
-                                    Header="Сотрудник"
-                                    Binding="{Binding employee_id}"
-                                    Width="100"/>
-
-                                <DataGridTextColumn
                                     Header="Статус"
                                     Binding="{Binding status}"
                                     Width="150"/>

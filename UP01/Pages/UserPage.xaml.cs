@@ -28,89 +28,47 @@ namespace UP01.Pages
             SortComboBox.SelectedIndex = 0;
 
             LoadUser();
-            LoadClients();
-            LoadVehicles();
-            LoadOrders();
+            LoadStatistics();
+            ApplySearch();
         }
 
         private void LoadUser()
         {
             if (AuthService.CurrentUser == null)
+            {
+                UserNameTextBlock.Text = "Пользователь";
                 return;
+            }
 
             UserNameTextBlock.Text =
-                AuthService.CurrentUser.first_name
-                + " "
-                + AuthService.CurrentUser.last_name;
+                AuthService.CurrentUser.first_name + " " +
+                AuthService.CurrentUser.last_name;
         }
-        private void LoadClients()
+
+        private void LoadStatistics()
         {
-            ClientsDataGrid.ItemsSource =
-                Core.Core.Context.clients
-                    .OrderBy(x => x.last_name)
-                    .ToList();
+            var vehicles = Core.Core.Context.vehicles.ToList();
+            var orders = Core.Core.Context.work_orders.ToList();
+
+            VehiclesCountTextBlock.Text =
+                vehicles.Count.ToString();
+
+            OrdersCountTextBlock.Text =
+                orders.Count.ToString();
+
+            CompletedOrdersCountTextBlock.Text =
+                orders.Count(x =>
+                    x.status != null &&
+                    x.status.ToLower() == "завершён").ToString();
         }
-
-        private void LoadVehicles()
-        {
-            VehiclesDataGrid.ItemsSource =
-                Core.Core.Context.vehicles
-                    .OrderBy(x => x.make)
-                    .ToList();
-        }
-
-        private void LoadOrders()
-        {
-            OrdersDataGrid.ItemsSource =
-                Core.Core.Context.work_orders
-                    .OrderByDescending(x => x.start_date)
-                    .ToList();
-        }
-
-
-        private void SearchTextBox_TextChanged(
-            object sender,
-            TextChangedEventArgs e)
-        {
-            ApplySearch();
-        }
-
 
         private void ApplySearch()
         {
-            string search =
-                SearchTextBox.Text.Trim().ToLower();
+            string search = SearchTextBox.Text.Trim().ToLower();
+            int tabIndex = DataTabControl.SelectedIndex;
+            int sortIndex = SortComboBox.SelectedIndex;
 
-            if (DataTabControl.SelectedIndex == 0)
-            {
-                var clients =
-                    Core.Core.Context.clients.AsQueryable();
-
-                if (!string.IsNullOrWhiteSpace(search))
-                {
-                    clients = clients.Where(x =>
-                        x.first_name.ToLower().Contains(search) ||
-                        x.last_name.ToLower().Contains(search) ||
-                        x.phone.ToLower().Contains(search) ||
-                        x.email.ToLower().Contains(search));
-                }
-
-                if (SortComboBox.SelectedIndex == 1)
-                {
-                    clients = clients
-                        .OrderBy(x => x.first_name);
-                }
-                else
-                {
-                    clients = clients
-                        .OrderBy(x => x.last_name);
-                }
-
-                ClientsDataGrid.ItemsSource =
-                    clients.ToList();
-            }
-
-            else if (DataTabControl.SelectedIndex == 1)
+            if (tabIndex == 0)
             {
                 var vehicles =
                     Core.Core.Context.vehicles.AsQueryable();
@@ -118,33 +76,32 @@ namespace UP01.Pages
                 if (!string.IsNullOrWhiteSpace(search))
                 {
                     vehicles = vehicles.Where(x =>
-                        x.vin.ToLower().Contains(search) ||
-                        x.make.ToLower().Contains(search) ||
-                        x.model.ToLower().Contains(search) ||
-                        x.license_plate.ToLower().Contains(search));
+                        (x.make != null &&
+                         x.make.ToLower().Contains(search)) ||
+                        (x.model != null &&
+                         x.model.ToLower().Contains(search)) ||
+                        (x.vin != null &&
+                         x.vin.ToLower().Contains(search)) ||
+                        (x.license_plate != null &&
+                         x.license_plate.ToLower().Contains(search)));
                 }
 
-                if (SortComboBox.SelectedIndex == 1)
+                if (sortIndex == 1)
                 {
-                    vehicles = vehicles
-                        .OrderBy(x => x.make);
+                    vehicles = vehicles.OrderBy(x => x.make);
                 }
-                else if (SortComboBox.SelectedIndex == 2)
+                else if (sortIndex == 2)
                 {
-                    vehicles = vehicles
-                        .OrderBy(x => x.model);
+                    vehicles = vehicles.OrderByDescending(x => x.make);
                 }
                 else
                 {
-                    vehicles = vehicles
-                        .OrderBy(x => x.vehicle_id);
+                    vehicles = vehicles.OrderBy(x => x.vehicle_id);
                 }
 
-                VehiclesDataGrid.ItemsSource =
-                    vehicles.ToList();
+                VehiclesDataGrid.ItemsSource = vehicles.ToList();
             }
-
-            else if (DataTabControl.SelectedIndex == 2)
+            else if (tabIndex == 1)
             {
                 var orders =
                     Core.Core.Context.work_orders.AsQueryable();
@@ -152,45 +109,58 @@ namespace UP01.Pages
                 if (!string.IsNullOrWhiteSpace(search))
                 {
                     orders = orders.Where(x =>
-                        x.status.ToLower().Contains(search));
+                        (x.status != null &&
+                         x.status.ToLower().Contains(search)) ||
+                        x.order_id.ToString().Contains(search) ||
+                        x.vehicle_id.ToString().Contains(search));
                 }
 
-                if (SortComboBox.SelectedIndex == 1)
+                if (sortIndex == 1)
                 {
-                    orders = orders
-                        .OrderBy(x => x.status);
+                    orders = orders.OrderBy(x => x.start_date);
+                }
+                else if (sortIndex == 2)
+                {
+                    orders = orders.OrderByDescending(x => x.start_date);
                 }
                 else
                 {
-                    orders = orders
-                        .OrderByDescending(x => x.start_date);
+                    orders = orders.OrderByDescending(x => x.start_date);
                 }
 
-                OrdersDataGrid.ItemsSource =
-                    orders.ToList();
+                OrdersDataGrid.ItemsSource = orders.ToList();
             }
+        }
+
+        private void SearchTextBox_TextChanged(
+            object sender,
+            TextChangedEventArgs e)
+        {
+            if (IsInitialized)
+                ApplySearch();
         }
 
         private void SortComboBox_SelectionChanged(
             object sender,
             SelectionChangedEventArgs e)
         {
-            if (!IsInitialized)
-                return;
-
-            ApplySearch();
+            if (IsInitialized)
+                ApplySearch();
         }
 
         private void DataTabControl_SelectionChanged(
             object sender,
             SelectionChangedEventArgs e)
         {
-            if (!IsInitialized)
+            if (!IsInitialized ||
+                SearchTextBox == null ||
+                SortComboBox == null)
                 return;
 
             SearchTextBox.Clear();
-
             SortComboBox.SelectedIndex = 0;
+
+            ApplySearch();
         }
 
         private void ResetButton_Click(
@@ -198,12 +168,10 @@ namespace UP01.Pages
             RoutedEventArgs e)
         {
             SearchTextBox.Clear();
-
             SortComboBox.SelectedIndex = 0;
 
-            LoadClients();
-            LoadVehicles();
-            LoadOrders();
+            LoadStatistics();
+            ApplySearch();
         }
 
         private void ChangePasswordButton_Click(
@@ -218,23 +186,23 @@ namespace UP01.Pages
             object sender,
             RoutedEventArgs e)
         {
-            MessageBoxResult result =
-                MessageBox.Show(
-                    "Вы действительно хотите выйти?",
-                    "Выход",
-                    MessageBoxButton.YesNo,
-                    MessageBoxImage.Question);
+            MessageBoxResult result = MessageBox.Show(
+                "Вы действительно хотите выйти?",
+                "Выход",
+                MessageBoxButton.YesNo,
+                MessageBoxImage.Question);
 
             if (result != MessageBoxResult.Yes)
                 return;
 
             AuthService.Logout();
 
-            NavigationService.Navigate(
-                new LoginPage());
+            NavigationService.Navigate(new LoginPage());
         }
 
-        private void ThemeButton_Click(object sender, RoutedEventArgs e)
+        private void ThemeButton_Click(
+            object sender,
+            RoutedEventArgs e)
         {
             ThemeManager.ToggleTheme();
         }

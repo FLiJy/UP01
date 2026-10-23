@@ -2,17 +2,11 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <!-- ========================================= -->
-    <!-- ЦВЕТА -->
-    <!-- ========================================= -->
-
-    <!-- Основные -->
     <SolidColorBrush x:Key="WhiteBrush" Color="#FFFFFF"/>
     <SolidColorBrush x:Key="LightBackgroundBrush" Color="#F3F3F3"/>
     <SolidColorBrush x:Key="CyanBrush" Color="#0198AF"/>
     <SolidColorBrush x:Key="BlueBrush" Color="#233E76"/>
 
-    <!-- Дополнительные -->
     <SolidColorBrush x:Key="LightGrayBrush" Color="#EAEBED"/>
     <SolidColorBrush x:Key="GreenDarkBrush" Color="#256569"/>
     <SolidColorBrush x:Key="TurquoiseBrush" Color="#4DC6C5"/>
@@ -21,11 +15,6 @@
     <SolidColorBrush x:Key="BlueDarkBrush" Color="#193D57"/>
     <SolidColorBrush x:Key="GrayBrush" Color="#9197A3"/>
     <SolidColorBrush x:Key="ErrorBrush" Color="#DD4B42"/>
-
-
-    <!-- ========================================= -->
-    <!-- КИСТИ -->
-    <!-- ========================================= -->
 
     <SolidColorBrush x:Key="PageBackgroundBrush"
                      Color="#F3F3F3"/>
@@ -57,11 +46,6 @@
     <SolidColorBrush x:Key="ErrorTextBrush"
                      Color="#DD4B42"/>
 
-
-    <!-- ========================================= -->
-    <!-- РАЗМЕРЫ -->
-    <!-- ========================================= -->
-
     <sys:Double x:Key="ButtonWidth"
                 xmlns:sys="clr-namespace:System;assembly=mscorlib">
         180
@@ -72,10 +56,6 @@
         40
     </sys:Double>
 
-
-    <!-- ========================================= -->
-    <!-- ОБЩИЙ СТИЛЬ ТЕКСТА -->
-    <!-- ========================================= -->
 
     <Style x:Key="DefaultTextStyle"
            TargetType="TextBlock">
@@ -90,11 +70,6 @@
                 Value="14"/>
 
     </Style>
-
-
-    <!-- ========================================= -->
-    <!-- ЗАГОЛОВОК СТРАНИЦЫ -->
-    <!-- ========================================= -->
 
     <Style x:Key="PageTitleStyle"
            TargetType="TextBlock">
@@ -116,11 +91,6 @@
 
     </Style>
 
-
-    <!-- ========================================= -->
-    <!-- ПОДЗАГОЛОВОК -->
-    <!-- ========================================= -->
-
     <Style x:Key="SubtitleStyle"
            TargetType="TextBlock">
 
@@ -138,10 +108,6 @@
 
     </Style>
 
-
-    <!-- ========================================= -->
-    <!-- BUTTON -->
-    <!-- ========================================= -->
 
     <Style TargetType="Button">
 
@@ -178,10 +144,6 @@
     </Style>
 
 
-    <!-- ========================================= -->
-    <!-- TEXTBOX -->
-    <!-- ========================================= -->
-
     <Style TargetType="TextBox">
 
         <Setter Property="Height"
@@ -212,11 +174,6 @@
                 Value="0,5"/>
 
     </Style>
-
-
-    <!-- ========================================= -->
-    <!-- PASSWORD BOX -->
-    <!-- ========================================= -->
 
     <Style TargetType="PasswordBox">
 
@@ -249,11 +206,6 @@
 
     </Style>
 
-
-    <!-- ========================================= -->
-    <!-- COMBOBOX -->
-    <!-- ========================================= -->
-
     <Style TargetType="ComboBox">
 
         <Setter Property="Height"
@@ -279,11 +231,6 @@
 
     </Style>
 
-
-    <!-- ========================================= -->
-    <!-- LABEL -->
-    <!-- ========================================= -->
-
     <Style TargetType="Label">
 
         <Setter Property="FontFamily"
@@ -297,10 +244,6 @@
 
     </Style>
 
-
-    <!-- ========================================= -->
-    <!-- DATA GRID -->
-    <!-- ========================================= -->
 
     <Style TargetType="DataGrid">
 
@@ -340,10 +283,6 @@
     </Style>
 
 
-    <!-- ========================================= -->
-    <!-- ОСНОВНОЙ BORDER / CARD -->
-    <!-- ========================================= -->
-
     <Style x:Key="CardStyle"
            TargetType="Border">
 
@@ -361,10 +300,6 @@
 
     </Style>
 
-
-    <!-- ========================================= -->
-    <!-- БОКОВОЕ МЕНЮ -->
-    <!-- ========================================= -->
 
     <Style x:Key="MenuButtonStyle"
            TargetType="Button">
@@ -402,10 +337,6 @@
     </Style>
 
 
-    <!-- ========================================= -->
-    <!-- ЛОГОТИП -->
-    <!-- ========================================= -->
-
     <Style x:Key="LogoStyle"
            TargetType="Image">
 
@@ -416,12 +347,7 @@
                 Value="Center"/>
 
     </Style>
-    
-    
 
-    <!-- ========================================= -->
-    <!-- DATA GRID: ЯЧЕЙКИ -->
-    <!-- ========================================= -->
 
     <Style TargetType="DataGridCell">
 
@@ -448,11 +374,6 @@
         </Style.Triggers>
 
     </Style>
-
-
-    <!-- ========================================= -->
-    <!-- DATA GRID: ЗАГОЛОВКИ СТОЛБЦОВ -->
-    <!-- ========================================= -->
 
     <Style TargetType="DataGridColumnHeader">
 

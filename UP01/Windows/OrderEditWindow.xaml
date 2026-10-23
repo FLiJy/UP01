@@ -65,7 +65,6 @@
 
                     <ComboBoxItem Content="Новый"/>
                     <ComboBoxItem Content="В работе"/>
-                    <ComboBoxItem Content="Ожидает запчасти"/>
                     <ComboBoxItem Content="Завершён"/>
                     <ComboBoxItem Content="Отменён"/>
 
