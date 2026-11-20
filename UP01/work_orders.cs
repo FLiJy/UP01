@@ -14,13 +14,29 @@ namespace UP01
     
     public partial class work_orders
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public work_orders()
+        {
+            this.order_parts = new HashSet<order_parts>();
+            this.order_services = new HashSet<order_services>();
+            this.payments = new HashSet<payments>();
+        }
+    
         public int order_id { get; set; }
         public int vehicle_id { get; set; }
         public string status { get; set; }
         public System.DateTime start_date { get; set; }
         public Nullable<System.DateTime> completion_date { get; set; }
         public decimal total_amount { get; set; }
+        public Nullable<int> employee_id { get; set; }
     
         public virtual vehicles vehicles { get; set; }
+        public virtual employees employees { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<order_parts> order_parts { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<order_services> order_services { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<payments> payments { get; set; }
     }
 }

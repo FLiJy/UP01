@@ -384,6 +384,11 @@
                                     Width="60"/>
 
                                 <DataGridTextColumn
+                                    Header="Сотрудник"
+                                    Binding="{Binding Employee_id}"
+                                    Width="100"/>
+
+                                <DataGridTextColumn
                                     Header="Автомобиль"
                                     Binding="{Binding vehicle_id}"
                                     Width="100"/>

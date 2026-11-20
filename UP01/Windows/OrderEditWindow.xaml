@@ -25,6 +25,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
@@ -36,11 +37,25 @@
                        Style="{StaticResource PageTitleStyle}"
                        HorizontalAlignment="Center"
                        Margin="0,0,0,20"/>
+                
+       
+
+                <StackPanel Grid.Row="1"
+                Margin="0,5">
+
+                    <TextBlock Text="сотрудник"/>
+
+                <ComboBox x:Name="EmployeeComboBox"
+              DisplayMemberPath="DisplayName"
+              SelectedValuePath="employee_id"
+              ToolTip="Выберите сотрудника"/>
+
+            </StackPanel>
 
 
             <!-- Автомобиль -->
 
-            <StackPanel Grid.Row="1"
+            <StackPanel Grid.Row="2"
                         Margin="0,5">
 
                 <TextBlock Text="Автомобиль"/>
@@ -55,7 +70,7 @@
 
             <!-- Статус -->
 
-            <StackPanel Grid.Row="2"
+            <StackPanel Grid.Row="3"
                         Margin="0,5">
 
                 <TextBlock Text="Статус"/>
@@ -75,7 +90,7 @@
 
             <!-- Дата начала -->
 
-            <StackPanel Grid.Row="3"
+            <StackPanel Grid.Row="4"
                         Margin="0,5">
 
                 <TextBlock Text="Дата начала"/>
@@ -87,7 +102,7 @@
 
             <!-- Дата завершения -->
 
-            <StackPanel Grid.Row="4"
+            <StackPanel Grid.Row="5"
                         Margin="0,5">
 
                 <TextBlock Text="Дата завершения"/>
@@ -99,7 +114,7 @@
 
             <!-- Сумма -->
 
-            <StackPanel Grid.Row="5"
+            <StackPanel Grid.Row="6"
                         Margin="0,5">
 
                 <TextBlock Text="Сумма заказа"/>
@@ -111,13 +126,13 @@
 
 
             <TextBlock x:Name="ErrorTextBlock"
-                       Grid.Row="6"
+                       Grid.Row="7"
                        Foreground="{DynamicResource ErrorTextBrush}"
                        TextWrapping="Wrap"
                        Margin="0,10"/>
 
 
-            <StackPanel Grid.Row="7"
+            <StackPanel Grid.Row="8"
                         Orientation="Horizontal"
                         HorizontalAlignment="Center">
 
