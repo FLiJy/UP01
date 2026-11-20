@@ -385,7 +385,7 @@
 
                                 <DataGridTextColumn
                                     Header="Сотрудник"
-                                    Binding="{Binding Employee_id}"
+                                    Binding="{Binding employees.first_name}"
                                     Width="100"/>
 
                                 <DataGridTextColumn

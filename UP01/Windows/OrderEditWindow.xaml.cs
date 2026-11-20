@@ -14,16 +14,12 @@ using System.Windows.Shapes;
 
 namespace UP01.Windows
 {
-    /// <summary>
-    /// Логика взаимодействия для OrderEditWindow.xaml
-    /// </summary>
     public partial class OrderEditWindow : Window
     {
         private work_orders currentOrder;
         private bool isEdit;
 
-
-        // Добавление
+        // Добавление заказа
         public OrderEditWindow()
         {
             InitializeComponent();
@@ -34,32 +30,29 @@ namespace UP01.Windows
                 Core.Core.Context.work_orders.Create();
 
             LoadVehicles();
+            LoadEmployees();
 
-            StartDatePicker.SelectedDate =
-                DateTime.Today;
-
+            StartDatePicker.SelectedDate = DateTime.Today;
             StatusComboBox.SelectedIndex = 0;
         }
 
-
-        // Редактирование
+        // Редактирование заказа
         public OrderEditWindow(work_orders order)
         {
             InitializeComponent();
 
             isEdit = true;
-
             currentOrder = order;
 
-            TitleTextBlock.Text =
-                "Редактирование заказа";
+            TitleTextBlock.Text = "Редактирование заказа";
 
             LoadVehicles();
+            LoadEmployees();
 
             LoadOrder();
         }
 
-
+        // Загрузка автомобилей
         private void LoadVehicles()
         {
             var vehicles =
@@ -69,19 +62,41 @@ namespace UP01.Windows
                     x.vehicle_id,
 
                     DisplayName =
-                        x.make + " "
-                        + x.model + " - "
-                        + x.license_plate
+                        x.make + " " +
+                        x.model + " - " +
+                        x.license_plate
                 })
                 .ToList();
 
-            VehicleComboBox.ItemsSource =
-                vehicles;
+            VehicleComboBox.ItemsSource = vehicles;
         }
 
+        // Загрузка сотрудников
+        private void LoadEmployees()
+        {
+            var employees =
+                Core.Core.Context.employees
+                .Where(x => x.is_active == true)
+                .Select(x => new
+                {
+                    x.employee_id,
 
+                    DisplayName =
+                        x.first_name + " " +
+                        x.last_name + " - " +
+                        x.position
+                })
+                .ToList();
+
+            EmployeeComboBox.ItemsSource = employees;
+        }
+
+        // Загрузка данных заказа
         private void LoadOrder()
         {
+            EmployeeComboBox.SelectedValue =
+                currentOrder.employee_id;
+
             VehicleComboBox.SelectedValue =
                 currentOrder.vehicle_id;
 
@@ -94,18 +109,15 @@ namespace UP01.Windows
             TotalAmountTextBox.Text =
                 currentOrder.total_amount.ToString();
 
-
             for (int i = 0;
                  i < StatusComboBox.Items.Count;
                  i++)
             {
                 ComboBoxItem item =
-                    StatusComboBox.Items[i]
-                    as ComboBoxItem;
+                    StatusComboBox.Items[i] as ComboBoxItem;
 
                 if (item != null &&
-                    item.Content.ToString()
-                    == currentOrder.status)
+                    item.Content.ToString() == currentOrder.status)
                 {
                     StatusComboBox.SelectedIndex = i;
                     break;
@@ -113,16 +125,23 @@ namespace UP01.Windows
             }
         }
 
-
+        // Сохранение заказа
         private void SaveButton_Click(
             object sender,
             RoutedEventArgs e)
         {
             ErrorTextBlock.Text = "";
 
+            // Проверка сотрудника
+            if (EmployeeComboBox.SelectedValue == null)
+            {
+                ErrorTextBlock.Text =
+                    "Выберите сотрудника.";
 
-            // Проверяем автомобиль
+                return;
+            }
 
+            // Проверка автомобиля
             if (VehicleComboBox.SelectedValue == null)
             {
                 ErrorTextBlock.Text =
@@ -131,9 +150,7 @@ namespace UP01.Windows
                 return;
             }
 
-
-            // Проверяем статус
-
+            // Проверка статуса
             if (StatusComboBox.SelectedItem == null)
             {
                 ErrorTextBlock.Text =
@@ -142,9 +159,7 @@ namespace UP01.Windows
                 return;
             }
 
-
-            // Проверяем дату
-
+            // Проверка даты начала
             if (StartDatePicker.SelectedDate == null)
             {
                 ErrorTextBlock.Text =
@@ -153,13 +168,11 @@ namespace UP01.Windows
                 return;
             }
 
-
             DateTime startDate =
                 StartDatePicker.SelectedDate.Value;
 
             DateTime? completionDate =
                 CompletionDatePicker.SelectedDate;
-
 
             if (completionDate.HasValue &&
                 completionDate.Value < startDate)
@@ -170,9 +183,7 @@ namespace UP01.Windows
                 return;
             }
 
-
-            // Проверяем сумму
-
+            // Проверка суммы
             decimal totalAmount;
 
             if (!decimal.TryParse(
@@ -193,17 +204,15 @@ namespace UP01.Windows
                 return;
             }
 
-
             ComboBoxItem statusItem =
-                StatusComboBox.SelectedItem
-                as ComboBoxItem;
+                StatusComboBox.SelectedItem as ComboBoxItem;
 
-
-            // Записываем данные
+            // Запись данных
+            currentOrder.employee_id =
+                Convert.ToInt32(EmployeeComboBox.SelectedValue);
 
             currentOrder.vehicle_id =
-                Convert.ToInt32(
-                    VehicleComboBox.SelectedValue);
+                Convert.ToInt32(VehicleComboBox.SelectedValue);
 
             currentOrder.status =
                 statusItem.Content.ToString();
@@ -216,7 +225,6 @@ namespace UP01.Windows
 
             currentOrder.total_amount =
                 totalAmount;
-
 
             try
             {
@@ -241,15 +249,14 @@ namespace UP01.Windows
             catch (Exception ex)
             {
                 MessageBox.Show(
-                    "Ошибка сохранения заказа:\n\n"
-                    + ex.Message,
+                    "Ошибка сохранения заказа:\n\n" + ex.Message,
                     "Ошибка",
                     MessageBoxButton.OK,
                     MessageBoxImage.Error);
             }
         }
 
-
+        // Отмена
         private void CancelButton_Click(
             object sender,
             RoutedEventArgs e)
