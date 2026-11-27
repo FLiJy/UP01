@@ -21,8 +21,6 @@ namespace UP01
         }
     
         public int part_id { get; set; }
-        public int category_id { get; set; }
-        public int supplier_id { get; set; }
         public string part_name { get; set; }
         public string article { get; set; }
         public string unit { get; set; }
@@ -30,10 +28,10 @@ namespace UP01
         public decimal sale_price { get; set; }
         public int quantity_in_stock { get; set; }
         public int min_stock { get; set; }
+        public string supplier_name { get; set; }
+        public string category_name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<order_parts> order_parts { get; set; }
-        public virtual part_categories part_categories { get; set; }
-        public virtual suppliers suppliers { get; set; }
     }
 }

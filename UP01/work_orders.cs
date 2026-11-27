@@ -30,7 +30,6 @@ namespace UP01
         public decimal total_amount { get; set; }
         public Nullable<int> employee_id { get; set; }
     
-        public virtual vehicles vehicles { get; set; }
         public virtual employees employees { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<order_parts> order_parts { get; set; }
@@ -38,5 +37,6 @@ namespace UP01
         public virtual ICollection<order_services> order_services { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<payments> payments { get; set; }
+        public virtual vehicles vehicles { get; set; }
     }
 }
