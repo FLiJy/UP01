@@ -7,10 +7,12 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="LoginPage">
+    
 
     <Grid Background="{DynamicResource PageBackgroundBrush}">
-
-        <Border
+        <ScrollViewer VerticalScrollBarVisibility="Auto"
+      HorizontalScrollBarVisibility="Disabled">
+            <Border
             Width="450"
             Padding="40"
             Background="{DynamicResource CardBackgroundBrush}"
@@ -18,9 +20,9 @@
             HorizontalAlignment="Center"
             VerticalAlignment="Center">
 
-            <StackPanel>
+                <StackPanel>
 
-                <Image
+                    <Image
                     Source="/res/Логотип.png"
                     Width="180"
                     Height="130"
@@ -28,66 +30,66 @@
                     HorizontalAlignment="Center"
                     Margin="0,0,0,10"/>
 
-                <TextBlock
+                    <TextBlock
                     Text="Авторизация"
                     Style="{StaticResource PageTitleStyle}"
                     HorizontalAlignment="Center"/>
 
-                <TextBlock
+                    <TextBlock
                     Text="Система управления автосервисом"
                     Style="{StaticResource SubtitleStyle}"
                     HorizontalAlignment="Center"
                     TextAlignment="Center"
                     Margin="0,0,0,20"/>
 
-                <TextBlock
+                    <TextBlock
                     Text="Логин"/>
 
-                <TextBox
+                    <TextBox
                     x:Name="LoginTextBox"
                     ToolTip="Введите логин"
                     MaxLength="50"/>
 
-                <TextBlock
+                    <TextBlock
                     Text="Пароль"
                     Margin="0,10,0,0"/>
 
-                <PasswordBox
+                    <PasswordBox
                     x:Name="PasswordBox"
                     ToolTip="Введите пароль"
                     MaxLength="50"/>
 
-                <StackPanel
+                    <StackPanel
                     x:Name="CaptchaPanel"
                     Visibility="Collapsed"
                     Margin="0,10,0,0">
 
-                    <TextBlock
+                        <TextBlock
                         Text="Введите код с изображения:"
                         Margin="0,0,0,5"/>
 
-                    <Border
+                        <Border
                         Background="{DynamicResource LightGrayBrush}"
                         CornerRadius="5"
                         Padding="10"
                         HorizontalAlignment="Left">
 
-                        <TextBlock
+                            <TextBlock
                             x:Name="CaptchaTextBlock"
                             FontSize="22"
                             FontWeight="Bold"
                             Foreground="{DynamicResource SecondaryBrush}"
                             />
-                    </Border>
+                        </Border>
 
-                    <TextBox
+                        <TextBox
                         x:Name="CaptchaTextBox"
                         ToolTip="Введите код с изображения"
                         MaxLength="5"/>
 
-                </StackPanel>
+                    </StackPanel>
 
-                <TextBlock
+                    <TextBlock
                     x:Name="ErrorTextBlock"
                     Foreground="{DynamicResource ErrorTextBrush}"
                     FontFamily="Open Sans"
@@ -95,21 +97,20 @@
                     TextWrapping="Wrap"
                     Margin="0,10,0,0"/>
 
-                <Button
+                    <Button
                     Content="Войти"
                     Click="LoginButton_Click"
                     Margin="0,20,0,5"/>
 
-                <Button
+                    <Button
                     Content="Регистрация"
                     Click="RegisterButton_Click"
                     Background="{DynamicResource SecondaryBrush}"
                     Margin="0,5,0,0"/>
 
-            </StackPanel>
-
-        </Border>
-
+                </StackPanel>
+            </Border>
+        </ScrollViewer>
     </Grid>
 
 </Page>

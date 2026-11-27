@@ -1,16 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿
+using System;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace UP01.Windows
 {
@@ -29,8 +21,8 @@ namespace UP01.Windows
             currentOrder =
                 Core.Core.Context.work_orders.Create();
 
-            LoadVehicles();
             LoadEmployees();
+            LoadVehicles();
 
             StartDatePicker.SelectedDate = DateTime.Today;
             StatusComboBox.SelectedIndex = 0;
@@ -46,10 +38,30 @@ namespace UP01.Windows
 
             TitleTextBlock.Text = "Редактирование заказа";
 
-            LoadVehicles();
             LoadEmployees();
-
+            LoadVehicles();
             LoadOrder();
+        }
+
+        // Загрузка сотрудников
+        private void LoadEmployees()
+        {
+            var employees =
+                Core.Core.Context.employees
+                .Where(x => x.is_active == true)
+                .OrderBy(x => x.last_name)
+                .Select(x => new
+                {
+                    x.employee_id,
+
+                    DisplayName =
+                        x.last_name + " " +
+                        x.first_name + " (" +
+                        x.position + ")"
+                })
+                .ToList();
+
+            EmployeeComboBox.ItemsSource = employees;
         }
 
         // Загрузка автомобилей
@@ -71,27 +83,7 @@ namespace UP01.Windows
             VehicleComboBox.ItemsSource = vehicles;
         }
 
-        // Загрузка сотрудников
-        private void LoadEmployees()
-        {
-            var employees =
-                Core.Core.Context.employees
-                .Where(x => x.is_active == true)
-                .Select(x => new
-                {
-                    x.employee_id,
-
-                    DisplayName =
-                        x.first_name + " " +
-                        x.last_name + " - " +
-                        x.position
-                })
-                .ToList();
-
-            EmployeeComboBox.ItemsSource = employees;
-        }
-
-        // Загрузка данных заказа
+        // Загрузка информации о заказе
         private void LoadOrder()
         {
             EmployeeComboBox.SelectedValue =
@@ -132,16 +124,6 @@ namespace UP01.Windows
         {
             ErrorTextBlock.Text = "";
 
-            // Проверка сотрудника
-            if (EmployeeComboBox.SelectedValue == null)
-            {
-                ErrorTextBlock.Text =
-                    "Выберите сотрудника.";
-
-                return;
-            }
-
-            // Проверка автомобиля
             if (VehicleComboBox.SelectedValue == null)
             {
                 ErrorTextBlock.Text =
@@ -150,7 +132,6 @@ namespace UP01.Windows
                 return;
             }
 
-            // Проверка статуса
             if (StatusComboBox.SelectedItem == null)
             {
                 ErrorTextBlock.Text =
@@ -159,7 +140,6 @@ namespace UP01.Windows
                 return;
             }
 
-            // Проверка даты начала
             if (StartDatePicker.SelectedDate == null)
             {
                 ErrorTextBlock.Text =
@@ -183,7 +163,6 @@ namespace UP01.Windows
                 return;
             }
 
-            // Проверка суммы
             decimal totalAmount;
 
             if (!decimal.TryParse(
@@ -207,24 +186,28 @@ namespace UP01.Windows
             ComboBoxItem statusItem =
                 StatusComboBox.SelectedItem as ComboBoxItem;
 
-            // Запись данных
-            currentOrder.employee_id =
-                Convert.ToInt32(EmployeeComboBox.SelectedValue);
+            // Записываем выбранного сотрудника
+            if (EmployeeComboBox.SelectedValue != null)
+            {
+                currentOrder.employee_id =
+                    Convert.ToInt32(
+                        EmployeeComboBox.SelectedValue);
+            }
+            else
+            {
+                currentOrder.employee_id = null;
+            }
 
             currentOrder.vehicle_id =
-                Convert.ToInt32(VehicleComboBox.SelectedValue);
+                Convert.ToInt32(
+                    VehicleComboBox.SelectedValue);
 
             currentOrder.status =
                 statusItem.Content.ToString();
 
-            currentOrder.start_date =
-                startDate;
-
-            currentOrder.completion_date =
-                completionDate;
-
-            currentOrder.total_amount =
-                totalAmount;
+            currentOrder.start_date = startDate;
+            currentOrder.completion_date = completionDate;
+            currentOrder.total_amount = totalAmount;
 
             try
             {
@@ -249,7 +232,8 @@ namespace UP01.Windows
             catch (Exception ex)
             {
                 MessageBox.Show(
-                    "Ошибка сохранения заказа:\n\n" + ex.Message,
+                    "Ошибка сохранения заказа:\n\n" +
+                    ex.Message,
                     "Ошибка",
                     MessageBoxButton.OK,
                     MessageBoxImage.Error);

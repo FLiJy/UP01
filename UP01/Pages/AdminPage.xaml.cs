@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.Entity;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -31,11 +32,13 @@ namespace UP01.Pages
 
             SortComboBox.SelectedIndex = 0;
 
+            LoadEmployees();
             LoadAdmin();
             LoadClients();
             LoadVehicles();
             LoadOrders();
             LoadStatistics();
+
         }
 
 
@@ -49,7 +52,13 @@ namespace UP01.Pages
                 + " "
                 + AuthService.CurrentUser.last_name;
         }
-
+        private void LoadEmployees()
+        {
+            EmployeesDataGrid.ItemsSource = Core.Core.Context.employees
+                .OrderBy(x => x.last_name)
+                .ThenBy(x => x.first_name)
+                .ToList();
+        }
 
         private void LoadClients()
         {
@@ -68,14 +77,15 @@ namespace UP01.Pages
                     .ToList();
         }
 
-
         private void LoadOrders()
         {
             OrdersDataGrid.ItemsSource =
                 Core.Core.Context.work_orders
+                    .Include("employees")
                     .OrderByDescending(x => x.start_date)
                     .ToList();
         }
+
 
 
         // =========================
@@ -160,6 +170,20 @@ namespace UP01.Pages
                     vehicles.ToList();
             }
 
+            else if (AdminTabControl.SelectedIndex == 5)
+            {
+                string searchText = SearchTextBox.Text.Trim();
+
+                EmployeesDataGrid.ItemsSource = Core.Core.Context.employees
+                    .Where(x =>
+                        x.first_name.Contains(searchText) ||
+                        x.last_name.Contains(searchText) ||
+                        x.phone.Contains(searchText) ||
+                        x.position.Contains(searchText))
+                    .OrderBy(x => x.last_name)
+                    .ThenBy(x => x.first_name)
+                    .ToList();
+            }
 
             else if (AdminTabControl.SelectedIndex == 2)
             {
@@ -186,6 +210,7 @@ namespace UP01.Pages
                 OrdersDataGrid.ItemsSource =
                     orders.ToList();
             }
+
         }
 
 
@@ -675,6 +700,77 @@ namespace UP01.Pages
         private void ThemeButton_Click(object sender, RoutedEventArgs e)
         {
             ThemeManager.ToggleTheme();
+        }
+
+        private void AddEmployeeButton_Click(object sender, RoutedEventArgs e)
+        {
+            EmployeeEditWindow window = new EmployeeEditWindow();
+
+            if (window.ShowDialog() == true)
+            {
+                LoadEmployees();
+            }
+        }
+
+        private void EditEmployeeButton_Click(object sender, RoutedEventArgs e)
+        {
+            employees selectedEmployee = EmployeesDataGrid.SelectedItem as employees;
+
+            if (selectedEmployee == null)
+            {
+                MessageBox.Show("Выберите сотрудника для редактирования.");
+                return;
+            }
+
+            EmployeeEditWindow window = new EmployeeEditWindow(selectedEmployee);
+
+            if (window.ShowDialog() == true)
+            {
+                LoadEmployees();
+            }
+        }
+
+        private void DeleteEmployeeButton_Click(object sender, RoutedEventArgs e)
+        {
+            employees selectedEmployee = EmployeesDataGrid.SelectedItem as employees;
+
+            if (selectedEmployee == null)
+            {
+                MessageBox.Show("Выберите сотрудника для удаления.");
+                return;
+            }
+
+            bool hasOrders = Core.Core.Context.work_orders
+                .Any(x => x.employee_id == selectedEmployee.employee_id);
+
+            if (hasOrders)
+            {
+                MessageBox.Show(
+                    "Нельзя удалить сотрудника, за которым закреплены заказы.\n" +
+                    "Сначала переназначьте эти заказы.",
+                    "Удаление невозможно",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning);
+
+                return;
+            }
+
+            MessageBoxResult result = MessageBox.Show(
+                "Вы действительно хотите удалить сотрудника " +
+                selectedEmployee.last_name + " " + selectedEmployee.first_name + "?",
+                "Подтверждение удаления",
+                MessageBoxButton.YesNo,
+                MessageBoxImage.Question);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                Core.Core.Context.employees.Remove(selectedEmployee);
+                Core.Core.Context.SaveChanges();
+
+                LoadEmployees();
+
+                MessageBox.Show("Сотрудник успешно удалён.");
+            }
         }
     }
 }

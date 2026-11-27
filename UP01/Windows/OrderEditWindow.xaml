@@ -16,138 +16,139 @@
             CornerRadius="10"
             Background="{DynamicResource CardBackgroundBrush}">
 
-        <Grid>
+        <ScrollViewer VerticalScrollBarVisibility="Auto"
+                    HorizontalScrollBarVisibility="Disabled">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
 
-
-            <TextBlock x:Name="TitleTextBlock"
+                <TextBlock x:Name="TitleTextBlock"
                        Grid.Row="0"
                        Text="Добавление заказа"
                        Style="{StaticResource PageTitleStyle}"
                        HorizontalAlignment="Center"
                        Margin="0,0,0,20"/>
-                
-       
+
+
 
                 <StackPanel Grid.Row="1"
                 Margin="0,5">
 
                     <TextBlock Text="сотрудник"/>
 
-                <ComboBox x:Name="EmployeeComboBox"
+                    <ComboBox x:Name="EmployeeComboBox"
               DisplayMemberPath="DisplayName"
               SelectedValuePath="employee_id"
               ToolTip="Выберите сотрудника"/>
 
-            </StackPanel>
+                </StackPanel>
 
 
-            <!-- Автомобиль -->
+                <!-- Автомобиль -->
 
-            <StackPanel Grid.Row="2"
+                <StackPanel Grid.Row="2"
                         Margin="0,5">
 
-                <TextBlock Text="Автомобиль"/>
+                    <TextBlock Text="Автомобиль"/>
 
-                <ComboBox x:Name="VehicleComboBox"
+                    <ComboBox x:Name="VehicleComboBox"
                           DisplayMemberPath="DisplayName"
                           SelectedValuePath="vehicle_id"
                           ToolTip="Выберите автомобиль"/>
 
-            </StackPanel>
+                </StackPanel>
 
 
-            <!-- Статус -->
+                <!-- Статус -->
 
-            <StackPanel Grid.Row="3"
+                <StackPanel Grid.Row="3"
                         Margin="0,5">
 
-                <TextBlock Text="Статус"/>
+                    <TextBlock Text="Статус"/>
 
-                <ComboBox x:Name="StatusComboBox"
+                    <ComboBox x:Name="StatusComboBox"
                           ToolTip="Выберите статус">
 
-                    <ComboBoxItem Content="Новый"/>
-                    <ComboBoxItem Content="В работе"/>
-                    <ComboBoxItem Content="Завершён"/>
-                    <ComboBoxItem Content="Отменён"/>
+                        <ComboBoxItem Content="Новый"/>
+                        <ComboBoxItem Content="В работе"/>
+                        <ComboBoxItem Content="Завершён"/>
+                        <ComboBoxItem Content="Отменён"/>
 
-                </ComboBox>
+                    </ComboBox>
 
-            </StackPanel>
+                </StackPanel>
 
 
-            <!-- Дата начала -->
+                <!-- Дата начала -->
 
-            <StackPanel Grid.Row="4"
+                <StackPanel Grid.Row="4"
                         Margin="0,5">
 
-                <TextBlock Text="Дата начала"/>
+                    <TextBlock Text="Дата начала"/>
 
-                <DatePicker x:Name="StartDatePicker"/>
+                    <DatePicker x:Name="StartDatePicker"/>
 
-            </StackPanel>
+                </StackPanel>
 
 
-            <!-- Дата завершения -->
+                <!-- Дата завершения -->
 
-            <StackPanel Grid.Row="5"
+                <StackPanel Grid.Row="5"
                         Margin="0,5">
 
-                <TextBlock Text="Дата завершения"/>
+                    <TextBlock Text="Дата завершения"/>
 
-                <DatePicker x:Name="CompletionDatePicker"/>
+                    <DatePicker x:Name="CompletionDatePicker"/>
 
-            </StackPanel>
+                </StackPanel>
 
 
-            <!-- Сумма -->
+                <!-- Сумма -->
 
-            <StackPanel Grid.Row="6"
+                <StackPanel Grid.Row="6"
                         Margin="0,5">
 
-                <TextBlock Text="Сумма заказа"/>
+                    <TextBlock Text="Сумма заказа"/>
 
-                <TextBox x:Name="TotalAmountTextBox"
+                    <TextBox x:Name="TotalAmountTextBox"
                          ToolTip="Введите сумму заказа"/>
 
-            </StackPanel>
+                </StackPanel>
 
 
-            <TextBlock x:Name="ErrorTextBlock"
+                <TextBlock x:Name="ErrorTextBlock"
                        Grid.Row="7"
                        Foreground="{DynamicResource ErrorTextBrush}"
                        TextWrapping="Wrap"
                        Margin="0,10"/>
 
 
-            <StackPanel Grid.Row="8"
+                <StackPanel Grid.Row="8"
                         Orientation="Horizontal"
                         HorizontalAlignment="Center">
 
-                <Button Content="Сохранить"
+                    <Button Content="Сохранить"
                         Click="SaveButton_Click"
                         Margin="5"/>
 
-                <Button Content="Отмена"
+                    <Button Content="Отмена"
                         Click="CancelButton_Click"
                         Margin="5"/>
 
-            </StackPanel>
+                </StackPanel>
 
-        </Grid>
-
+            </Grid>
+        </ScrollViewer>
     </Border>
 
 </Window>
